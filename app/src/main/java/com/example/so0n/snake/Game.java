@@ -1,11 +1,9 @@
 package com.example.so0n.snake;
 
-/**
- * Created by So0n on 29.01.2018.
- */
+
 
 public class Game {
-    private Field field;
+/*    private Field field;
     private Snake snake;
     private Apple apple;
 
@@ -24,5 +22,5 @@ public class Game {
             return true;
         } else
             return false;
-    }
+    }*/
 }

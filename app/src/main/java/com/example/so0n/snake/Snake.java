@@ -3,13 +3,10 @@ package com.example.so0n.snake;
 import android.graphics.Point;
 import java.util.ArrayList;
 
-/**
- * Created by So0n on 29.01.2018.
- */
 
 public class Snake {
-    private ArrayList<Point> bodySnake;
-    private int vector = 0;
+    private ArrayList<Point> bodySnake = new ArrayList<>();
+    private int route = 0;
 
     public void move() {
         //0 - stop
@@ -18,7 +15,7 @@ public class Snake {
         //3 - right
         //4 - back
 
-        switch (vector) {
+        switch (route) {
             case 0:
 
                 break;
@@ -57,10 +54,10 @@ public class Snake {
         }
     }
 
-    public void setVector(int vector) {
-        if (vector > 4 || vector <=0) return;
+    public void setRoute(int route) {
+        if (route > 4 || route <=0) return;
         else
-            this.vector = vector;
+            this.route = route;
     }
 
     public ArrayList<Point> getBodySnake() {
