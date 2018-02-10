@@ -1,14 +1,14 @@
 package com.example.so0n.snake;
 
 
+import android.content.Context;
 
 public class Game {
-/*    private Field field;
-    private Snake snake;
+
+/*    private Snake snake;
     private Apple apple;
 
     public void startGame() {
-        field = new Field();
         snake = new Snake();
         apple = new Apple();
 
@@ -23,4 +23,5 @@ public class Game {
         } else
             return false;
     }*/
+
 }

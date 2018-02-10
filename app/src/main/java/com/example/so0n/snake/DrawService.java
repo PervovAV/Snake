@@ -6,14 +6,10 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Display;
-import android.view.MotionEvent;
+
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.Toast;
+
 
 public class DrawService extends View {
 
@@ -35,13 +31,7 @@ public class DrawService extends View {
         super.onDraw(canvas);
         canvas.drawColor(Color.BLUE);
 
-        int step = width/12;
 
-        bitmap = Bitmap.createBitmap(step, step, Bitmap.Config.ARGB_8888);
-        paint.setColor(Color.GREEN);
-        bitmap.eraseColor(Color.WHITE);
-        canvas.drawBitmap(bitmap, 0, 0, paint);
-        canvas.drawCircle(width/2, height/2, 100, paint);
 
 
         Rect rect = new Rect();
@@ -51,5 +41,13 @@ public class DrawService extends View {
 
         String message = width + " x " + height;
         Log.d("MyLog", message);
+    }
+
+    public void drawBitmap(Canvas canvas, int x, int y) {
+        int step = width/12;
+        bitmap = Bitmap.createBitmap(step, step, Bitmap.Config.ARGB_8888);
+        paint.setColor(Color.GREEN);
+        bitmap.eraseColor(Color.WHITE);
+        canvas.drawBitmap(bitmap, 0, 0, paint);
     }
 }

@@ -26,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
 
         getSupportActionBar().hide();
 
+        Field field = new Field(width, height);
+
         setContentView(new DrawService(this, width, height));
 
 

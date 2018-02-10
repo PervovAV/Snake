@@ -6,6 +6,7 @@ import android.view.View;
 public class InputService implements View.OnTouchListener {
     private boolean[] routs = {false, false, false, false};
 
+
     public boolean[] getRouts() {
         return routs;
     }
