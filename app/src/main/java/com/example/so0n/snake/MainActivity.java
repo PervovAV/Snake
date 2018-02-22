@@ -8,6 +8,9 @@ import android.view.Window;
 import android.view.WindowManager;
 
 public class MainActivity extends AppCompatActivity {
+    GraphicRenderer graphicRenderer;
+    InputService inputService;
+    GameSnake gameSnake;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,29 +22,26 @@ public class MainActivity extends AppCompatActivity {
         int width = size.x;
         int height = size.y;
 
-
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         getSupportActionBar().hide();
 
-        Field field = new Field(width, height);
-
-//        setContentView(new GraphicRenderer(this, width, height));
-
-
-
-
-/*        TestActivity testActivity = new TestActivity(this);
-        InputService inputService = new InputService(testActivity);
-        inputService.setInputListener(testActivity);
-        setContentView(testActivity);*/
-
-
-        GraphicRenderer graphicRenderer = new GraphicRenderer(this, width, height);
-        TestActivityDraw testActivityDraw = new TestActivityDraw(graphicRenderer);
+        graphicRenderer = new GraphicRenderer(this, GameSnake.FIELD_SIDE, width, height);
+        inputService = new InputService(graphicRenderer);
+        gameSnake = new GameSnake(inputService, graphicRenderer);
         setContentView(graphicRenderer);
-        testActivityDraw.start();
+        try {
+            gameSnake.startGame();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        gameSnake.stop();
     }
 }

@@ -1,20 +1,33 @@
 package com.example.so0n.snake;
+import android.graphics.Point;
 
+import java.util.ArrayList;
 
 public class Field {
+    private int[][] fieldCoordinates;
 
-    public Field(int width, int height) {
-        this.width = width;
-        this.height = height;
-    }
-    public int getWidth() {
-        return width;
+    public Field (int n) {
+        fieldCoordinates = new int[n][n];
+        clearField();
     }
 
-    public int getHeight() {
-        return height;
+    public void clearField() {
+        for (int i = 0; i < fieldCoordinates.length; i++) {
+            for (int j = 0; j < fieldCoordinates.length; j++) {
+                fieldCoordinates[i][j] = 0;
+            }
+        }
     }
 
-    private int width;
-    private int height;
+    public int[][] getFieldCoordinates() {
+        return fieldCoordinates;
+    }
+
+    public void addBodySnakeApple(ArrayList<Point> arr, Point pointApple) {
+        clearField();
+        for (Point chain : arr) {
+            fieldCoordinates[(int)chain.x][(int)chain.y] = 1;
+        }
+        fieldCoordinates[pointApple.x][pointApple.y] = 2;
+    }
 }

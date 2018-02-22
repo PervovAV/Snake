@@ -6,8 +6,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.util.Log;
-
 import android.view.View;
 
 
@@ -20,14 +18,15 @@ public class GraphicRenderer extends View implements FieldRenderer {
     private int height;
 
     private int step;
-    private int[][] field = new int[12][12];
+    private int[][] cells;
 
 
-    public GraphicRenderer(Context context, int width, int height) {
+    public GraphicRenderer(Context context, int fieldSide, int width, int height) {
         super(context);
         this.width = width;
         this.height = height;
-        step = width/12;
+        cells = new int[fieldSide][fieldSide];
+        step = width/fieldSide;
     }
 
     @Override
@@ -38,7 +37,6 @@ public class GraphicRenderer extends View implements FieldRenderer {
     }
 
     private void drawBitmap(Canvas canvas, int x, int y, int color) {
-//        int step = width/12;
         bitmap = Bitmap.createBitmap(step, step, Bitmap.Config.ARGB_8888);
         paint.setColor(Color.GREEN);
         bitmap.eraseColor(color);
@@ -54,15 +52,15 @@ public class GraphicRenderer extends View implements FieldRenderer {
         canvas.drawRect(rect, paint);
     }
 
-    private void drawSnakeAndApple(Canvas canvas) {
-        for (int i = 0; i < field.length; i ++) {
-            for (int j = 0; j < field.length; j++) {
-                switch (field[i][j]) {
+    private synchronized void drawSnakeAndApple(Canvas canvas) {
+        for (int i = 0; i < cells.length; i ++) {
+            for (int j = 0; j < cells.length; j++) {
+                switch (cells[i][j]) {
                     case 1:
-                        drawBitmap(canvas, i * step, j * step, Color.WHITE);
+                        drawBitmap(canvas, j * step, i * step, Color.WHITE);
                         break;
                     case 2:
-                        drawBitmap(canvas, i * step, j * step, Color.GREEN);
+                        drawBitmap(canvas, j * step, i * step, Color.GREEN);
                         break;
                 }
             }
@@ -71,8 +69,12 @@ public class GraphicRenderer extends View implements FieldRenderer {
     }
 
     @Override
-    public void drawField(int[][] field) {
-        this.field = field;
-
+    public synchronized void drawField(Field field) {
+        for (int i = 0; i < field.getFieldCoordinates().length; i++) {
+            for (int j = 0; j < field.getFieldCoordinates()[i].length; j++) {
+                cells[i][j] = field.getFieldCoordinates()[i][j];
+            }
+        }
+        postInvalidate();
     }
 }
