@@ -4,8 +4,9 @@ package com.example.so0n.snake;
 import android.content.Context;
 
 public class Game {
+/*
 
-/*    private Snake snake;
+    private Snake snake;
     private Apple apple;
 
     public void startGame() {
@@ -22,6 +23,7 @@ public class Game {
             return true;
         } else
             return false;
-    }*/
+    }
+*/
 
 }

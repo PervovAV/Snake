@@ -28,8 +28,20 @@ public class MainActivity extends AppCompatActivity {
 
         Field field = new Field(width, height);
 
-        setContentView(new DrawService(this, width, height));
+//        setContentView(new GraphicRenderer(this, width, height));
 
 
+
+
+/*        TestActivity testActivity = new TestActivity(this);
+        InputService inputService = new InputService(testActivity);
+        inputService.setInputListener(testActivity);
+        setContentView(testActivity);*/
+
+
+        GraphicRenderer graphicRenderer = new GraphicRenderer(this, width, height);
+        TestActivityDraw testActivityDraw = new TestActivityDraw(graphicRenderer);
+        setContentView(graphicRenderer);
+        testActivityDraw.start();
     }
 }
