@@ -10,6 +10,7 @@ import android.view.View;
 
 
 public class GraphicRenderer extends View implements FieldRenderer {
+    private final static int SIZE_COEFFICIENT = 9;
 
     private Bitmap bitmap;
     private Paint paint = new Paint();
@@ -21,12 +22,12 @@ public class GraphicRenderer extends View implements FieldRenderer {
     private int[][] cells;
 
 
-    public GraphicRenderer(Context context, int fieldSide, int width, int height) {
+    public GraphicRenderer(Context context, int fieldSide_M, int fieldSide_N, int width, int height) {
         super(context);
         this.width = width;
         this.height = height;
-        cells = new int[fieldSide][fieldSide];
-        step = width/fieldSide;
+        cells = new int[fieldSide_M][fieldSide_N];
+        step = width/SIZE_COEFFICIENT;
     }
 
     @Override
@@ -46,15 +47,15 @@ public class GraphicRenderer extends View implements FieldRenderer {
     private void drawBackGround(Canvas canvas) {
         canvas.drawColor(Color.BLUE);
 
-        Rect rect = new Rect();
+/*        Rect rect = new Rect();
         rect.set(0, width, width, height);
         paint.setColor(Color.BLACK);
-        canvas.drawRect(rect, paint);
+        canvas.drawRect(rect, paint);*/
     }
 
     private synchronized void drawSnakeAndApple(Canvas canvas) {
         for (int i = 0; i < cells.length; i ++) {
-            for (int j = 0; j < cells.length; j++) {
+            for (int j = 0; j < cells[i].length; j++) {
                 switch (cells[i][j]) {
                     case 1:
                         drawBitmap(canvas, j * step, i * step, Color.WHITE);

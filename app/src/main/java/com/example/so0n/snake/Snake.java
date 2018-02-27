@@ -9,7 +9,9 @@ public class Snake {
     }
 
     private ArrayList<Point> bodySnake = new ArrayList<>();
+    private double speed = 0.0025;
     private int route = 2;
+    private int nextRoute = route;
 
     public synchronized void move() {
         //1 - up
@@ -17,7 +19,7 @@ public class Snake {
         //3 - down
         //4 - left
 
-        switch (route) {
+        switch (nextRoute) {
             case 1:
                 if (bodySnake.size() == 1) {
                     bodySnake.get(0).offset(-1, 0);
@@ -52,6 +54,7 @@ public class Snake {
                 }
                 break;
         }
+        route = nextRoute;
     }
 
     public synchronized void grow(Point backSnake) {
@@ -59,20 +62,30 @@ public class Snake {
     }
 
     public synchronized void setRoute(int route) {
-        if (route > 4 || route <=0) return;
+        if (isProper(route)) {
+            this.nextRoute = route;
+        }
+    }
+
+    private boolean isProper(int route) {
+        if (route > 4 || route <=0) return false;
         if ((this.route == 1) && (route == 3)){
-            return;
+            return false;
         }
         if ((this.route == 2) && (route == 4)){
-            return;
+            return false;
         }
         if ((this.route == 3) && (route == 1)){
-            return;
+            return false;
         }
         if ((this.route == 4) && (route == 2)){
-            return;
-        }   else
-            this.route = route;
+            return false;
+        } else
+            return true;
+    }
+
+    public double getSpeed() {
+        return speed;
     }
 
     public ArrayList<Point> getBodySnake() {

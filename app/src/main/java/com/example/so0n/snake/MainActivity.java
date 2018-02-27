@@ -28,8 +28,8 @@ public class MainActivity extends AppCompatActivity {
 
         getSupportActionBar().hide();
 
-        graphicRenderer = new GraphicRenderer(this, GameSnake.FIELD_SIDE, width, height);
-        inputService = new InputService(graphicRenderer);
+        graphicRenderer = new GraphicRenderer(this, GameSnake.FIELD_SIDE_M, GameSnake.FIELD_SIDE_N, width, height);
+        inputService = new InputService(width, height, graphicRenderer);
         gameSnake = new GameSnake(inputService, graphicRenderer);
         setContentView(graphicRenderer);
         try {
@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
     }
 
     @Override

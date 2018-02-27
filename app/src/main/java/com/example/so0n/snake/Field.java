@@ -6,14 +6,14 @@ import java.util.ArrayList;
 public class Field {
     private int[][] fieldCoordinates;
 
-    public Field (int n) {
-        fieldCoordinates = new int[n][n];
+    public Field (int m, int n) {
+        fieldCoordinates = new int[m][n];
         clearField();
     }
 
     public void clearField() {
         for (int i = 0; i < fieldCoordinates.length; i++) {
-            for (int j = 0; j < fieldCoordinates.length; j++) {
+            for (int j = 0; j < fieldCoordinates[i].length; j++) {
                 fieldCoordinates[i][j] = 0;
             }
         }

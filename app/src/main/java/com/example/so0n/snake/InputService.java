@@ -5,8 +5,12 @@ import android.view.View;
 
 public class InputService implements View.OnTouchListener {
     private InputListener inputListener;
+    private int width;
+    private int height;
 
-    public InputService(View view) {
+    public InputService(int width, int height, View view) {
+        this.width = width;
+        this.height = height;
         view.setOnTouchListener(this);
     }
 
@@ -16,16 +20,16 @@ public class InputService implements View.OnTouchListener {
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-        if (event.getY() < 640) {
+        if (event.getY() < height/3) {
             inputListener.onKeyPressed(1);
         }
-        if (event.getY() > 640 && event.getY() < 1280 && event.getX() < 540) {
+        if (event.getY() > height/3 && event.getY() < height*2/3 && event.getX() < width/2) {
             inputListener.onKeyPressed(4);
         }
-        if (event.getY() > 640 && event.getY() < 1280 && event.getX() > 540) {
+        if (event.getY() > height/3 && event.getY() < height*2/3 && event.getX() > width/2) {
             inputListener.onKeyPressed(2);
         }
-        if (event.getY() > 1280) {
+        if (event.getY() > height*2/3) {
             inputListener.onKeyPressed(3);
         }
         return false;
