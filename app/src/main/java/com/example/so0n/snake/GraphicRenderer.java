@@ -39,14 +39,6 @@ public class GraphicRenderer extends View implements FieldRenderer {
         drawSnakeAndApple(canvas);
     }
 
-    private void drawBitmap(Canvas canvas, int x, int y, int color) {
-        Bitmap bitmap = Bitmap.createBitmap(step, step, Bitmap.Config.ARGB_8888);
-        Paint paint = new Paint();
-        paint.setColor(Color.GREEN);
-        bitmap.eraseColor(color);
-        canvas.drawBitmap(bitmap, x, y, paint);
-    }
-
     private synchronized void drawSnakeAndApple(Canvas canvas) {
         for (int i = 0; i < cells.length; i ++) {
             for (int j = 0; j < cells[i].length; j++) {
