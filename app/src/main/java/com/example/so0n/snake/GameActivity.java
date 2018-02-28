@@ -1,5 +1,6 @@
 package com.example.so0n.snake;
 
+import android.content.Intent;
 import android.graphics.Point;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -7,7 +8,7 @@ import android.view.Display;
 import android.view.Window;
 import android.view.WindowManager;
 
-public class MainActivity extends AppCompatActivity {
+public class GameActivity extends AppCompatActivity {
     GraphicRenderer graphicRenderer;
     InputService inputService;
     GameSnake gameSnake;
@@ -31,18 +32,28 @@ public class MainActivity extends AppCompatActivity {
         graphicRenderer = new GraphicRenderer(this, GameSnake.FIELD_SIDE_M, GameSnake.FIELD_SIDE_N, width, height);
         inputService = new InputService(width, height, graphicRenderer);
         gameSnake = new GameSnake(inputService, graphicRenderer);
+        gameSnake.setGameEndHandler(new GameEndHandler() {
+            @Override
+            public void onGameEnd() {
+                callEndActivity();
+            }
+        });
         setContentView(graphicRenderer);
         try {
             gameSnake.startGame();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         gameSnake.stop();
+    }
+
+    private void callEndActivity() {
+        Intent intent = new Intent(this, EndActivity.class);
+        startActivity(intent);
     }
 }

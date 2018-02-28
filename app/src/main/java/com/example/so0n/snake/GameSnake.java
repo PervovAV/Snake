@@ -1,9 +1,5 @@
 package com.example.so0n.snake;
 import android.graphics.Point;
-import android.util.Log;
-
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 
@@ -17,6 +13,7 @@ public class GameSnake implements InputListener {
     private Field field;
     private FieldRenderer fieldRenderer;
     private AtomicBoolean active = new AtomicBoolean(false);
+    private GameEndHandler gameEndHandler;
 
     public GameSnake(InputService inputService, FieldRenderer fieldRenderer) {
         inputService.setInputListener(this);
@@ -47,6 +44,7 @@ public class GameSnake implements InputListener {
                         apple = appleGenerator.generate(field);
                     }
                 }
+                gameEndHandler.onGameEnd();
             }
         });
         gameThread.start();
@@ -72,5 +70,9 @@ public class GameSnake implements InputListener {
     @Override
     public void onKeyPressed(int key) {
         snake.setRoute(key);
+    }
+
+    public void setGameEndHandler(GameEndHandler gameEndHandler) {
+        this.gameEndHandler = gameEndHandler;
     }
 }
