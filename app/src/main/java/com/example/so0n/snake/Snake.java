@@ -4,14 +4,14 @@ import android.graphics.Point;
 import java.util.ArrayList;
 
 public class Snake {
+    private ArrayList<Point> bodySnake = new ArrayList<>();
+    private double speed = Settings.EASY_SPEED;
+    private int route = 2;
+    private int nextRoute = route;
+
     public Snake() {
         bodySnake.add(new Point(0, 0));
     }
-
-    private ArrayList<Point> bodySnake = new ArrayList<>();
-    private double speed = 0.0025;
-    private int route = 2;
-    private int nextRoute = route;
 
     public synchronized void move() {
         //1 - up
@@ -67,25 +67,12 @@ public class Snake {
         }
     }
 
-    private boolean isProper(int route) {
-        if (route > 4 || route <=0) return false;
-        if ((this.route == 1) && (route == 3)){
-            return false;
-        }
-        if ((this.route == 2) && (route == 4)){
-            return false;
-        }
-        if ((this.route == 3) && (route == 1)){
-            return false;
-        }
-        if ((this.route == 4) && (route == 2)){
-            return false;
-        } else
-            return true;
-    }
-
     public double getSpeed() {
         return speed;
+    }
+
+    public void setSpeed(double speed) {
+        this.speed = speed;
     }
 
     public ArrayList<Point> getBodySnake() {
@@ -96,13 +83,6 @@ public class Snake {
         for (int i = 0; i < bodySnake.size() - 1; i++) {
             bodySnake.set(i, bodySnake.get(i+1));
         }
-    }
-
-    private void createHead(int x, int y) {
-        bodySnake.remove(bodySnake.size() - 1);
-        Point tmpPoint = new Point(bodySnake.get(bodySnake.size()-1).x , bodySnake.get(bodySnake.size()-1).y);
-        tmpPoint.offset(x, y);
-        bodySnake.add(tmpPoint);
     }
 
     public String toString() {
@@ -124,6 +104,30 @@ public class Snake {
             }
         }
         return false;
+    }
+
+    private void createHead(int x, int y) {
+        bodySnake.remove(bodySnake.size() - 1);
+        Point tmpPoint = new Point(bodySnake.get(bodySnake.size()-1).x , bodySnake.get(bodySnake.size()-1).y);
+        tmpPoint.offset(x, y);
+        bodySnake.add(tmpPoint);
+    }
+
+    private boolean isProper(int route) {
+        if (route > 4 || route <=0) return false;
+        if ((this.route == 1) && (route == 3)){
+            return false;
+        }
+        if ((this.route == 2) && (route == 4)){
+            return false;
+        }
+        if ((this.route == 3) && (route == 1)){
+            return false;
+        }
+        if ((this.route == 4) && (route == 2)){
+            return false;
+        } else
+            return true;
     }
 }
 

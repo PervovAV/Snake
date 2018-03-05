@@ -1,6 +1,5 @@
 package com.example.so0n.snake;
 import android.graphics.Point;
-
 import java.util.ArrayList;
 
 public class Field {
@@ -30,4 +29,7 @@ public class Field {
         }
         fieldCoordinates[pointApple.x][pointApple.y] = 2;
     }
+    //0 - field
+    //1 - part of snake
+    //2 - apple
 }

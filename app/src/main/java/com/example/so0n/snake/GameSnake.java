@@ -4,9 +4,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 
 public class GameSnake implements InputListener {
-    Thread gameThread;
     public final static int FIELD_SIDE_M = 16;
     public final static int FIELD_SIDE_N = 9;
+    private Thread gameThread;
     private Snake snake;
     private Apple apple;
     private AppleGenerator appleGenerator;
@@ -14,10 +14,12 @@ public class GameSnake implements InputListener {
     private FieldRenderer fieldRenderer;
     private AtomicBoolean active = new AtomicBoolean(false);
     private GameEndHandler gameEndHandler;
+    private Settings settings;
 
-    public GameSnake(InputService inputService, FieldRenderer fieldRenderer) {
+    public GameSnake(InputService inputService, FieldRenderer fieldRenderer, Settings settings) {
         inputService.setInputListener(this);
         this.fieldRenderer = fieldRenderer;
+        this.settings = settings;
     }
 
     public void startGame() throws InterruptedException {
@@ -25,6 +27,7 @@ public class GameSnake implements InputListener {
             @Override
             public void run() {
                 snake = new Snake();
+                snake.setSpeed(settings.getSpeed());
                 appleGenerator = new AppleGenerator();
                 field = new Field(FIELD_SIDE_M, FIELD_SIDE_N);
                 apple = appleGenerator.generate(field);
@@ -59,14 +62,6 @@ public class GameSnake implements InputListener {
         }
     }
 
-    private boolean isGameEnd() {
-        return ((snake.getBodySnake().get(snake.getBodySnake().size() - 1).x < 0) ||
-                (snake.getBodySnake().get(snake.getBodySnake().size() - 1).x > FIELD_SIDE_M - 1) ||
-                (snake.getBodySnake().get(snake.getBodySnake().size() - 1).y < 0) ||
-                (snake.getBodySnake().get(snake.getBodySnake().size() - 1).y > FIELD_SIDE_N - 1) ||
-                (snake.eatsItself()));
-    }
-
     @Override
     public void onKeyPressed(int key) {
         snake.setRoute(key);
@@ -74,5 +69,13 @@ public class GameSnake implements InputListener {
 
     public void setGameEndHandler(GameEndHandler gameEndHandler) {
         this.gameEndHandler = gameEndHandler;
+    }
+
+    private boolean isGameEnd() {
+        return ((snake.getBodySnake().get(snake.getBodySnake().size() - 1).x < 0) ||
+                (snake.getBodySnake().get(snake.getBodySnake().size() - 1).x > FIELD_SIDE_M - 1) ||
+                (snake.getBodySnake().get(snake.getBodySnake().size() - 1).y < 0) ||
+                (snake.getBodySnake().get(snake.getBodySnake().size() - 1).y > FIELD_SIDE_N - 1) ||
+                (snake.eatsItself()));
     }
 }

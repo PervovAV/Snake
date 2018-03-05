@@ -28,15 +28,25 @@ public class GraphicRenderer extends View implements FieldRenderer {
         bitmapSnakeCell = createCellBitmap(R.drawable.snake_cell);
     }
 
-    private Bitmap createCellBitmap(int resourceID) {
-        Bitmap resBitmap = BitmapFactory.decodeResource(getResources(), resourceID);
-        return Bitmap.createScaledBitmap(resBitmap, step, step, false);
+    @Override
+    public synchronized void drawField(Field field) {
+        for (int i = 0; i < field.getFieldCoordinates().length; i++) {
+            for (int j = 0; j < field.getFieldCoordinates()[i].length; j++) {
+                cells[i][j] = field.getFieldCoordinates()[i][j];
+            }
+        }
+        postInvalidate();
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         drawSnakeAndApple(canvas);
+    }
+
+    private Bitmap createCellBitmap(int resourceID) {
+        Bitmap resBitmap = BitmapFactory.decodeResource(getResources(), resourceID);
+        return Bitmap.createScaledBitmap(resBitmap, step, step, false);
     }
 
     private synchronized void drawSnakeAndApple(Canvas canvas) {
@@ -53,15 +63,5 @@ public class GraphicRenderer extends View implements FieldRenderer {
                 }
             }
         }
-    }
-
-    @Override
-    public synchronized void drawField(Field field) {
-        for (int i = 0; i < field.getFieldCoordinates().length; i++) {
-            for (int j = 0; j < field.getFieldCoordinates()[i].length; j++) {
-                cells[i][j] = field.getFieldCoordinates()[i][j];
-            }
-        }
-        postInvalidate();
     }
 }
